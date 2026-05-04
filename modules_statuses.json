@@ -1,0 +1,15 @@
+{
+    "Common": true,
+    "Admin": true,
+    "Restaurant": true,
+    "Driver": true,
+    "Client": true,
+    "Category": true,
+    "Country": true,
+    "Branch": true,
+    "Product": true,
+    "Cart": true,
+    "Wishlist": true,
+    "Order": true,
+    "Coupon": true
+}

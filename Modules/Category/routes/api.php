@@ -1,0 +1,26 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use Modules\Category\App\Http\Controllers\Api\CategoryAdminController;
+use Modules\Category\App\Http\Controllers\Api\CategoryController;
+
+/*
+    |--------------------------------------------------------------------------
+    | API Routes
+    |--------------------------------------------------------------------------
+    |
+    | Here is where you can register API routes for your application. These
+    | routes are loaded by the RouteServiceProvider within a group which
+    | is assigned the "api" middleware group. Enjoy building your API!
+    |
+*/
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::apiResource('categories', CategoryAdminController::class)->except('update');
+    Route::post('categories/{category}', [CategoryAdminController::class, 'update']);
+    Route::get('categories/{category}/sub-categories', [CategoryAdminController::class, 'subCategories']);
+    Route::post('categories/{category}/toggle-activate', [CategoryAdminController::class, 'toggleActivate']);
+});
+
+Route::get('categories', [CategoryController::class, 'index']);
+Route::get('restaurants/{restaurant}/categories', [CategoryController::class, 'getByRestaurant']);
