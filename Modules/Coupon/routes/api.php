@@ -21,4 +21,5 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('coupons/{coupon}/toggle-activate', [CouponAdminController::class, 'activate']);
 });
 
+    Route::get('coupons', [CouponController::class, 'index']);
 Route::get('coupons/check', [CouponController::class, 'check']);
