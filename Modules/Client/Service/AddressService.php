@@ -12,7 +12,7 @@ class AddressService
     {
         $clientId = auth('client')->id();
 
-        return Address::with(['city.country', 'client', 'phone'])
+        return Address::with(['city', 'client', 'phone'])
             ->where('client_id', $clientId)
             ->latest()
             ->get();
