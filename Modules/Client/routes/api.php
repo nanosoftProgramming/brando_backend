@@ -40,6 +40,7 @@ Route::prefix('client')->middleware(['auth:client'])->group(function () {
     Route::prefix('addresses')->group(function () {
         Route::get('/', [AddressController::class, 'index']);
         Route::post('/', [AddressController::class, 'store']);
+        Route::get('/{address}', [AddressController::class, 'show']);
         // Some clients send updates as POST instead of PUT/PATCH
         Route::post('/{address}', [AddressController::class, 'update']);
         Route::put('/{address}', [AddressController::class, 'update']);

@@ -104,4 +104,15 @@ class AddressService
 
         return $deleted;
     }
+
+    public function findOne(Address $address)
+{
+    $clientId = auth('client')->id();
+
+    if ((int) $address->client_id !== (int) $clientId) {
+        throw new AuthorizationException('You are not allowed to view this address.');
+    }
+
+    return $address->load(['city', 'client', 'phone']);
+}
 }

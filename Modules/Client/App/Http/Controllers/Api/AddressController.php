@@ -81,4 +81,10 @@ class AddressController extends Controller
             return returnMessage(false, $e->getMessage(), null, 500);
         }
     }
+    public function show(Address $address)
+{
+    $data = $this->addressService->findOne($address);
+
+    return returnMessage(true, 'Address Details', $data);
+}
 }
