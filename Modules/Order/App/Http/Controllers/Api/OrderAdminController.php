@@ -21,12 +21,14 @@ class OrderAdminController extends Controller
         $this->middleware('role:Super Admin|Restaurant Manager|Branch Manager');
         $this->orderAdminService = $orderService;
     }
-    public function show($id)
+public function show($id)
 {
     $order = Order::with([
-        'user',
-        'items.product',
-        'address'
+        'address.city',
+        'details.product',
+        'restaurant',
+        'status',
+        'rate'
     ])->find($id);
 
     if (!$order) {
@@ -36,10 +38,12 @@ class OrderAdminController extends Controller
         ], 404);
     }
 
-    return response()->json([
-        'status' => true,
-        'data' => $order
-    ]);
+    return returnMessage(
+        true,
+        'Order fetched successfully',
+        new OrderAdminResource($order),
+        200
+    );
 }
     public function index(Request $request)
     {
