@@ -32,9 +32,10 @@ Route::middleware(['auth:admin', 'role:Super Admin|Restaurant Manager|Branch Man
     ->group(function () {
 
         Route::get('/', [OrderAdminController::class, 'index']);
+        Route::get('{id}', [OrderAdminController::class, 'show']);
 
         Route::put('{order}/status', [OrderAdminController::class, 'updateStatus']);
-Route::get('/orders/{id}', [OrderController::class, 'show']);
+
         Route::delete('{id}', [OrderAdminController::class, 'destroy']);
 
     });
