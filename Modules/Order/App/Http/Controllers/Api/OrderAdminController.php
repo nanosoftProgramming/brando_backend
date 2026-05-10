@@ -21,7 +21,26 @@ class OrderAdminController extends Controller
         $this->middleware('role:Super Admin|Restaurant Manager|Branch Manager');
         $this->orderAdminService = $orderService;
     }
+    public function show($id)
+{
+    $order = Order::with([
+        'user',
+        'items.product',
+        'address'
+    ])->find($id);
 
+    if (!$order) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Order not found'
+        ], 404);
+    }
+
+    return response()->json([
+        'status' => true,
+        'data' => $order
+    ]);
+}
     public function index(Request $request)
     {
         $dto = new OrderDto($request);
