@@ -34,7 +34,7 @@ Route::middleware(['auth:admin', 'role:Super Admin|Restaurant Manager|Branch Man
         Route::get('/', [OrderAdminController::class, 'index']);
 
         Route::put('{order}/status', [OrderAdminController::class, 'updateStatus']);
-
+Route::get('/orders/{id}', [OrderController::class, 'show']);
         Route::delete('{id}', [OrderAdminController::class, 'destroy']);
 
     });
