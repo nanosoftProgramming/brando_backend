@@ -26,7 +26,7 @@ class OrderAdminService
     public function findOne($id)
 {
     return Order::with([
-        'details.branch_product.product',
+        'items.branch_product.product',
         'status',
         'client',
         'address.city',
