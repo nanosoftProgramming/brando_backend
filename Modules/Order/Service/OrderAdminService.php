@@ -26,12 +26,11 @@ class OrderAdminService
     public function findOne($id)
 {
     return Order::with([
-        'items.branch_product.product',
+        'items.branch_product',
         'status',
         'client',
-        'address.city',
-        'branch',
-        'rate'
+        'address',
+        'rate.products.product'
     ])->findOrFail($id);
 }
 
