@@ -16,12 +16,24 @@ class OrderAdminService
         return getCaseCollection($query, $paginationData);
     }
 
+
     public function delete($id)
     {
         $order = Order::findOrFail($id);
 
         return $order->delete();
     }
+    public function findOne($id)
+{
+    return Order::with([
+        'items.branch_product.product',
+        'status',
+        'client',
+        'address.city',
+        'branch',
+        'rate'
+    ])->findOrFail($id);
+}
 
     public function updateStatus(Order $order, array $data): Order
     {

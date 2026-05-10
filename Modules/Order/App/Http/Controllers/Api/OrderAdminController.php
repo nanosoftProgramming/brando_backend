@@ -21,22 +21,17 @@ class OrderAdminController extends Controller
         $this->middleware('role:Super Admin|Restaurant Manager|Branch Manager');
         $this->orderAdminService = $orderService;
     }
+
+    public function index(Request $request)
+    {
+        $dto = new OrderDto($request);
+        $orders = $this->orderAdminService->findAll($dto->dataFromRequest());
+
+        return returnMessage(true, 'Order geted successfully', OrderAdminResource::collection($orders)->response()->getData(true), 200);
+    }
 public function show($id)
 {
-    $order = Order::with([
-        'address.city',
-        'details.product',
-        'restaurant',
-        'status',
-        'rate'
-    ])->find($id);
-
-    if (!$order) {
-        return response()->json([
-            'status' => false,
-            'message' => 'Order not found'
-        ], 404);
-    }
+    $order = $this->orderAdminService->findOne($id);
 
     return returnMessage(
         true,
@@ -45,14 +40,6 @@ public function show($id)
         200
     );
 }
-    public function index(Request $request)
-    {
-        $dto = new OrderDto($request);
-        $orders = $this->orderAdminService->findAll($dto->dataFromRequest());
-
-        return returnMessage(true, 'Order geted successfully', OrderAdminResource::collection($orders)->response()->getData(true), 200);
-    }
-
     public function updateStatus(UpdateOrderStatusRequest $request, Order $order)
     {
         DB::beginTransaction();
