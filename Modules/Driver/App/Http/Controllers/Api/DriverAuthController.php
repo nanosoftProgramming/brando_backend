@@ -44,7 +44,7 @@ class DriverAuthController extends Controller
             }
             
 
-            return $this->respondWithToken($token,"Driver");
+            return $this->respondWithToken($token,$type);
 
         } catch (\Exception $e) {
             return returnMessage(false, $e->getMessage(), null, 'server_error');
