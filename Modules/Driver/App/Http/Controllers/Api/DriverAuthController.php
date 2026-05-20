@@ -36,11 +36,17 @@ class DriverAuthController extends Controller
             if (! $token = auth('driver')->attempt($credentials)) {
                 return returnValidationMessage(false, 'Unauthorized', ['password' => 'Wrong Credentials'], 'unauthorized');
             }
+                        $driver = auth('driver')->user();
+
             if (auth('driver')->user()['is_active'] == 0) {
                 return returnMessage(false, 'In-Active Driver Verification Required', null, 'temporary_redirect');
             }
             if ($request['fcm_token'] ?? null) {
                 auth('driver')->user()->update(['fcm_token' => $request->fcm_token]);
+            }
+                      $driver->load('roles');
+            if ($driver->getRoleNames()->first() === 'driver') {
+                $driver->load('restaurant');
             }
 
             return $this->respondWithToken($token);
