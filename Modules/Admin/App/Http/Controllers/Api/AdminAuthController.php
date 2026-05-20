@@ -24,58 +24,33 @@ class AdminAuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    // public function login(AdminLoginRequest $request)
-    // {
-    //     try {
-    //         $credentials = $request->validated();
+    public function login(AdminLoginRequest $request)
+    {
+        try {
+            $credentials = $request->validated();
 
-    //         if (! $token = auth('admin')->attempt($credentials)) {
-    //             return returnValidationMessage(false, 'Unauthorized', ['password' => 'Wrong Credentials'], 'unauthorized');
-    //         }
+            if (! $token = auth('admin')->attempt($credentials)) {
+                return returnValidationMessage(false, 'Unauthorized', ['password' => 'Wrong Credentials'], 'unauthorized');
+            }
 
-    //         $admin = auth('admin')->user();
+            $admin = auth('admin')->user();
 
-    //         if ($admin->is_active == 0) {
-    //             return returnMessage(false, 'In-Active Admin Verification Required', null, 'temporary_redirect');
-    //         }
+            if ($admin->is_active == 0) {
+                return returnMessage(false, 'In-Active Admin Verification Required', null, 'temporary_redirect');
+            }
 
-    //         $admin->load('roles');
-    //         if ($admin->getRoleNames()->first() === 'Restaurant Manager') {
-    //             $admin->load('restaurant');
-    //         }
+            $admin->load('roles');
+            if ($admin->getRoleNames()->first() === 'Restaurant Manager') {
+                $admin->load('restaurant');
+            }
 
-    //         return $this->respondWithToken($token, $admin);
+            return $this->respondWithToken($token, $admin);
 
-    //     } catch (\Exception $e) {
-    //         return returnMessage(false, $e->getMessage(), null, 'server_error');
-    //     }
-    // }
-
-    public function login(DriverLoginRequest $request)
-{
-    try {
-        $credentials = $request->validated();
-
-        if (! $token = auth('driver')->attempt($credentials)) {
-            return returnValidationMessage(false, 'Unauthorized', ['password' => 'Wrong Credentials'], 'unauthorized');
+        } catch (\Exception $e) {
+            return returnMessage(false, $e->getMessage(), null, 'server_error');
         }
-
-        $driver = auth('driver')->user();
-
-        if ($driver->is_active == 0) {
-            return returnMessage(false, 'Inactive Driver', null, 'temporary_redirect');
-        }
-
-        if ($request['fcm_token'] ?? null) {
-            $driver->update(['fcm_token' => $request->fcm_token]);
-        }
-
-        return $this->respondWithToken($token);
-
-    } catch (\Exception $e) {
-        return returnMessage(false, $e->getMessage(), null, 'server_error');
     }
-}
+
     /**
      * Get the authenticated User.
      *
