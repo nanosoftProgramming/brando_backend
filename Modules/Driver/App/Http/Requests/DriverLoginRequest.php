@@ -16,7 +16,7 @@ class DriverLoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email', 'exists:drivers,email'],
+'phone' => ['required', 'exists:drivers,phone'],
             'password' => ['required'],
         ];
     }
@@ -27,7 +27,7 @@ class DriverLoginRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'email' => 'Email Address',
+'phone' => 'Phone Number',
             'password' => 'Password',
         ];
     }
