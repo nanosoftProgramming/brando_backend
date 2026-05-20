@@ -31,7 +31,7 @@ class DriverResource extends JsonResource
             'restaurant_name' => optional($this->restaurant)->name,
             'city_id' => $this->city_id,
             'restaurant_id' => $this->restaurant_id,
-            'role' => $this->role,
+            'role' => $this->getRoleNames()->first(),
             'created_at' => $this->created_at->format('Y-m-d h:i A'),
             'updated_at' => $this->created_at->format('Y-m-d h:i A'),
             'orders' => OrderAdminResource::collection($this->whenLoaded('orders')),
