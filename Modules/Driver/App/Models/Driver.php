@@ -11,10 +11,11 @@ use Modules\Restaurant\App\Models\Restaurant;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Spatie\Permission\Traits\HasRoles;
 
 class Driver extends Authenticatable implements JWTSubject
 {
-    use HasFactory, LogsActivity;
+    use HasFactory, HasRoles,LogsActivity;
 
     protected $fillable = ['name', 'email', 'phone', 'password', 'image',
         'is_active', 'verify_code', 'license_id',

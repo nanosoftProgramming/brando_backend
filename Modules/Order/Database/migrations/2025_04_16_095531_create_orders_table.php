@@ -28,7 +28,12 @@ return new class extends Migration
             $table->foreignIdFor(Client::class)->index()->constrained()->restrictOnDelete();
             $table->foreignIdFor(Address::class)->index()->constrained()->restrictOnDelete();
             $table->foreignIdFor(Restaurant::class)->index()->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Coupon::class)->nullable()->index()->constrained()->restrictOnDelete();
+            // $table->foreignIdFor(Coupon::class)->nullable()->index()->constrained()->restrictOnDelete();
+    
+    $table->foreignId('coupon_id')
+    ->nullable()
+    ->constrained('coupons')
+    ->nullOnDelete();
             $table->enum('payment_method', ['cash', 'visa', 'online']);
             $table->foreignIdFor(OrderStatus::class)->index()->constrained()->restrictOnDelete();
             $table->timestamps();

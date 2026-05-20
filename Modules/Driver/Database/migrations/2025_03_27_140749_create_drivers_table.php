@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone')->unique();
             $table->string('password');
-            $table->string('license_id')->unique();
+            $table->string('license_id')->nullable()->unique();
             $table->string('image')->nullable();
             $table->foreignIdFor(City::class)->index()->constrained()->cascadeOnDelete();
             $table->decimal('latitude', 10, 8)->nullable();
