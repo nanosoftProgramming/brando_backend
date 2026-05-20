@@ -44,9 +44,12 @@ class DriverDto
             $this->license_id = $request->get('license_id');
         }
 
+        // if ($request->get('password')) {
+        //     $this->password = Hash::make($request->get('password'));
+        // }
         if ($request->get('password')) {
-            $this->password = Hash::make($request->get('password'));
-        }
+    $this->password = $request->get('password');
+}
 
         if ($request->hasFile('image')) {
             $this->image = $request->file('image');
